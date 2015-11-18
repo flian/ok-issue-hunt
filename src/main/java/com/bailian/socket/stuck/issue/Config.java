@@ -42,4 +42,7 @@ public class Config {
     public static String cLog() {
         return config.getProperty("client.system.out");
     }
+    public static String cErrorLog() {
+        return config.getProperty("client.system.error");
+    }
 }

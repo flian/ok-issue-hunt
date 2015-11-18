@@ -7,19 +7,22 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Date;
 import java.util.Scanner;
 
 public class SocketTimeoutClientSide {
     public static void main(String[] args) throws InterruptedException, IOException {
         if (Config.isLogRedirect()) {
-            PrintStream ps = new PrintStream(new FileOutputStream(
+            PrintStream out = new PrintStream(new FileOutputStream(
                     Config.cLog()));
-            System.setErr(ps);
-            System.setOut(ps);
+            PrintStream error = new PrintStream(new FileOutputStream(
+                    Config.cErrorLog()));
+            System.setErr(error);
+            System.setOut(out);
         }
         final SocketPool pool = new SocketPool(Config.ip(), Config.port());
         //等待连接初始化完成
-        Thread.sleep(5*1000L);
+        Thread.sleep(3*1000L);
         int threadCount = pool.poolSize() * 2;
         for (; threadCount > 0; threadCount--) {
             new Thread(new Runnable() {
@@ -27,7 +30,7 @@ public class SocketTimeoutClientSide {
                 public void run() {
                     String preFix="["+Thread.currentThread().getId()+"+"+Thread.currentThread().getName()+"]";
                     do {
-                        long startTime = System.currentTimeMillis();
+
                         Socket client = null;
                         do {
                             client = pool.borrow();
@@ -37,6 +40,8 @@ public class SocketTimeoutClientSide {
                                 e.printStackTrace();
                             }
                         } while (null == client);
+                        //拿到连接后开始计时
+                        long startTime = System.currentTimeMillis();
                         try {
                             OutputStream out = client.getOutputStream();
                             out.write((preFix+"Hello Server, I'm SocketTimeoutClientSide\nEND\n").getBytes());
@@ -60,8 +65,14 @@ public class SocketTimeoutClientSide {
                         long endTime = System.currentTimeMillis();
                         long howLong=(endTime - startTime)/(1000);
                         System.out.println(preFix+"本次共执行"+howLong+"秒钟");
-                        if(60*1000L < howLong){
-                            System.out.println(preFix+"####ERROR####本次共执行超过一分钟，看起来卡了。"+howLong);
+                        if(60*1000L <= howLong){
+                            StringBuffer sb=new StringBuffer();
+                            sb.append("#####################ERROR#####################").append("\n");
+                            sb.append("start dateTime:" + new Date(startTime)).append("\n");
+                            sb.append("end dateTime:" + new Date(endTime)).append("\n");
+                            sb.append(preFix + "####ERROR####本次共执行超过一分钟，看起来卡了。" + howLong).append("\n");
+                            sb.append("###############################################").append("\n");
+                            System.err.println(sb.toString());
                         }
                         //休息3秒？
                         try {

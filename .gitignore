@@ -3,3 +3,7 @@
 /ok-issue-hunt.iml
 /socket-stuck-hunt.iml
 /log
+
+/SocketTimeoutClientSide.log
+
+/clientError.log
