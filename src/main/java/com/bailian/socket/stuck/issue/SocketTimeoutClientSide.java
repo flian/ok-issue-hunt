@@ -2,11 +2,9 @@ package com.bailian.socket.stuck.issue;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -76,7 +74,7 @@ public class SocketTimeoutClientSide {
                         }
                         //随机休息0-5分钟？
                         try {
-                            Thread.sleep(randomSleep());
+                            Thread.sleep(Config.randomSleep());
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -88,8 +86,5 @@ public class SocketTimeoutClientSide {
         }
 
     }
-    public static final long randomSleep(){
-        long maxSleepTime=5*60*1000L;
-        return (long)(Math.random()*maxSleepTime);
-    }
+
 }

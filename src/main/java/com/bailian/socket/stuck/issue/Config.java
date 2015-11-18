@@ -42,7 +42,21 @@ public class Config {
     public static String cLog() {
         return config.getProperty("client.system.out");
     }
+
     public static String cErrorLog() {
         return config.getProperty("client.system.error");
+    }
+
+    public static String jdbcLog() {
+        return config.getProperty("jdbc.system.out");
+    }
+
+    public static String jdbcErrorLog() {
+        return config.getProperty("jdbc.system.error");
+    }
+
+    public static final long randomSleep(){
+        long maxSleepTime=5*60*1000L;
+        return (long)(Math.random()*maxSleepTime);
     }
 }

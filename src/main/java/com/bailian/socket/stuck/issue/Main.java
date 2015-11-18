@@ -24,7 +24,10 @@ public class Main {
                 SocketTimeoutClientSide.main(args);
                 break;
             }
-
+            case 3:{
+                JDBCPingTest.main(args);
+                break;
+            }
             default: {
                 System.out.println("pending.....");
                 break;
