@@ -58,8 +58,7 @@ public class SocketPool {
         sb.append("currently Using Socket ").append(usingCnt).append("\n");
         sb.append("currently NULL Socket ").append(exceptionCnt).append("]\n");
         String result=sb.toString();
-        //System.out.println(result);
-        System.console().printf(result);
+        System.out.println(result);
         return result;
     }
     public int poolSize() {
@@ -78,18 +77,12 @@ public class SocketPool {
                 }
             }
         }
-        System.console().printf("can't borrow socket,just return null!\n");
+        System.out.println("can't borrow socket,just return null!");
         return null;
     }
 
     static class SocketWrap extends Socket {
-        private Socket socket;
         private volatile boolean isUsing = false;
-
-        public SocketWrap(Socket s) {
-            this.socket = s;
-        }
-
         public SocketWrap(String server, int port) throws IOException {
             super(server, port);
         }

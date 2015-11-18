@@ -19,7 +19,7 @@ public class SocketTimeoutClientSide {
         }
         final SocketPool pool = new SocketPool(Config.ip(), Config.port());
         //等待连接初始化完成
-        Thread.sleep(10*1000L);
+        Thread.sleep(5*1000L);
         int threadCount = pool.poolSize() * 2;
         for (; threadCount > 0; threadCount--) {
             new Thread(new Runnable() {
