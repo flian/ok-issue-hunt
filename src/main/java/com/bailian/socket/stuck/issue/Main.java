@@ -7,12 +7,15 @@ import java.util.Scanner;
  */
 public class Main {
     public static void main(String[] args) throws Exception {
+        int choose = 0;
         if (args == null || args.length < 1) {
             useage();
+            Scanner in = new Scanner(System.in);
+            choose = in.nextInt();
+        }else{
+            choose=Integer.parseInt(args[0]);
         }
-        Scanner in = new Scanner(System.in);
-        int i = in.nextInt();
-        switch (i) {
+        switch (choose) {
             case 1: {
                 SocketTimeoutTestServerSide.main(args);
                 break;
