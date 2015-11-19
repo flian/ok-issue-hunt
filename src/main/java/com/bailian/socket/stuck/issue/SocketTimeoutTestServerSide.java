@@ -11,13 +11,7 @@ import java.util.Scanner;
 public class SocketTimeoutTestServerSide {
 
     public static void main(String args[]) throws IOException {
-        if (Config.isLogRedirect()) {
-            PrintStream ps = new PrintStream(new FileOutputStream(
-                    Config.sLog()));
-            System.setErr(ps);
-            System.setOut(ps);
-        }
-
+        Config.checkLog(SocketTimeoutTestServerSide.class);
         ServerSocket server = new ServerSocket(Config.port(), 200,
                 InetAddress.getByName(Config.ip()));
         System.out.println("server start:" + server.getInetAddress()+ ":"+ server.getLocalPort());

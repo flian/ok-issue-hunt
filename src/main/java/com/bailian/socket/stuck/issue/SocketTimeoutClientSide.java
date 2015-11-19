@@ -1,24 +1,15 @@
 package com.bailian.socket.stuck.issue;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintStream;
 import java.net.Socket;
 import java.util.Date;
 import java.util.Scanner;
 
 public class SocketTimeoutClientSide {
     public static void main(String[] args) throws InterruptedException, IOException {
-        if (Config.isLogRedirect()) {
-            PrintStream out = new PrintStream(new FileOutputStream(
-                    Config.cLog()));
-            PrintStream error = new PrintStream(new FileOutputStream(
-                    Config.cErrorLog()));
-            System.setErr(error);
-            System.setOut(out);
-        }
-        final SocketPool pool = new SocketPool(Config.ip(), Config.port());
+        Config.checkLog(SocketTimeoutClientSide.class);
+        final SocketPools pool = new SocketPools(Config.ip(), Config.port());
         //等待连接初始化完成
         Thread.sleep(3*1000L);
         int threadCount = pool.poolSize() * 2;

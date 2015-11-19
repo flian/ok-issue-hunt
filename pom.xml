@@ -14,6 +14,7 @@
         <ojdbc6.version>1.0</ojdbc6.version>
         <druid.verison>1.0.11</druid.verison>
         <maven-jar-plugin.version>2.3.2</maven-jar-plugin.version>
+        <tomcat-dbc.version>8.0.28</tomcat-dbc.version>
     </properties>
     <dependencies>
         <dependency>
@@ -25,6 +26,11 @@
             <groupId>commons-dbcp</groupId>
             <artifactId>commons-dbcp</artifactId>
             <version>${commons-dbcp.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-dbcp</artifactId>
+            <version>${tomcat-dbc.version}</version>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>

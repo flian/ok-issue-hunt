@@ -1,7 +1,8 @@
 package com.bailian.socket.stuck.issue;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import org.apache.commons.dbcp.BasicDataSource;
+import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
+
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -25,8 +26,7 @@ public class JDBCPools {
         dbcpDS.setUrl("jdbc:oracle:thin:@192.168.140.203:1521:okstage");
         dbcpDS.setUsername("ok_wallet");
         dbcpDS.setPassword("ok_wallet");
-        dbcpDS.setMaxActive(500);
-
+        dbcpDS.setMaxTotal(500);
         DruidDataSource druidDS = new DruidDataSource();
         druidDS.setDriverClassName("oracle.jdbc.driver.OracleDriver");
         druidDS.setUrl("jdbc:oracle:thin:@192.168.140.203:1521:okstage");

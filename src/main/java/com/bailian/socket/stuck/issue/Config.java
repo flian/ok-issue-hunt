@@ -1,8 +1,6 @@
 package com.bailian.socket.stuck.issue;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.Properties;
 
 /**
@@ -35,24 +33,20 @@ public class Config {
         return Integer.parseInt(config.getProperty("server.socket.listen.port"));
     }
 
-    public static String sLog() {
-        return config.getProperty("server.system.out");
+    public  static void checkLog(Class clz) throws FileNotFoundException {
+        if(isLogRedirect()){
+            redirectSysOutErr(clz);
+        }
     }
-
-    public static String cLog() {
-        return config.getProperty("client.system.out");
-    }
-
-    public static String cErrorLog() {
-        return config.getProperty("client.system.error");
-    }
-
-    public static String jdbcLog() {
-        return config.getProperty("jdbc.system.out");
-    }
-
-    public static String jdbcErrorLog() {
-        return config.getProperty("jdbc.system.error");
+    public static void redirectSysOutErr(Class clz) throws FileNotFoundException {
+        String outLog=clz.getName()+"Out.log";
+        String errorLog=clz.getName()+"Error.log";
+        PrintStream out = new PrintStream(new FileOutputStream(
+                outLog));
+        PrintStream error = new PrintStream(new FileOutputStream(
+                errorLog));
+        System.setErr(error);
+        System.setOut(out);
     }
 
     public static final long randomSleep(){

@@ -1,7 +1,5 @@
 package com.bailian.socket.stuck.issue;
 
-import oracle.jdbc.driver.OracleConnection;
-
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
@@ -15,15 +13,7 @@ import java.util.Date;
 public class JDBCPingTest {
 
     public static void main(String[] args) throws FileNotFoundException {
-        if (Config.isLogRedirect()) {
-            PrintStream out = new PrintStream(new FileOutputStream(
-                    Config.jdbcLog()));
-            PrintStream error = new PrintStream(new FileOutputStream(
-                    Config.jdbcErrorLog()));
-            System.setErr(error);
-            System.setOut(out);
-        }
-
+        Config.checkLog(JDBCPingTest.class);
         int pingThreadCount = 40;
         for (int i = 0; i < pingThreadCount; i++) {
             new Thread(new Runnable() {
@@ -71,7 +61,7 @@ public class JDBCPingTest {
 
     private static void doPing(Connection con, String preFix) throws SQLException {
         long startTime = System.currentTimeMillis();
-        con.isValid(16*60*1000);
+        con.isValid(16 * 60);
         long endTime = System.currentTimeMillis();
         long spendTime = (endTime - startTime) / 1000L;
         if (1 * 60 * 1000L <= spendTime) {
